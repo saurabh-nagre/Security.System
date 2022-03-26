@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security.System</title>
+
+    <style>
+        .output{
+            margin-top: 45px;
+            margin-left: 8%;
+        }
+        figcaption{
+            text-align: center;
+            color: black;
+        }
+        img{
+            width: 100%;
+            height: 350px;
+            image-rendering: optimizeQuality;
+            background-color: black;
+        }
+        figure{
+            width: 42%;
+            float: left;
+            margin: 10px;
+        }
+        header{
+            background-color:black;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            width: 100%;
+            color: white;
+            height: 40px;
+            z-index: 1;
+        }
+        header>h1{
+            color:white;
+            margin-left: 1%;
+            margin-top: 0px;
+            size: 100%;
+        }
+        .openbtn{
+            cursor:pointer;
+            color: white;
+            position: absolute;
+            right: 0px;
+            top: 8px;
+            font-size: 100%;
+            margin-right: 1%; 
+        }
+        
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 5%;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            bottom: 10%;
+            left: 0px;
+            font-size: 36px;
+        }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidenav > form{
+            color: white;
+        }
+
+        .sidenav a:hover {
+            color: white;
+        }
+
+        label{
+            display: inline-block;
+            width: 100px;
+            margin: 10px;
+            text-align: right;
+        }
+        input{
+            display: inline-block;
+            margin: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        @media screen and (max-width: 800px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+            figure {width: 100%;}
+            .output{margin-left: 0px;}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Security.System</h1>
+        <h1 class = "openbtn" onclick="openNav()">&#9776;</h1>
+    </header> 
+
+    <div class="output">
+        <figure>
+            <img class = "frame" src = "{% url '_stream1' %}" >
+            <figcaption>{{Cam}}</figcaption>
+        </figure>
+        <figure>
+            <!-- src call fro stream function in urls and then it goes to views -->
+            <img class = "frame" src = "{% url '_stream2' %}">
+            <figcaption>{{Cam}}</figcaption>
+        </figure>
+        <figure>
+            <img class = "frame" src ="{% url '_stream3' %}">
+            <figcaption>{{Cam}}</figcaption>
+        </figure>
+        <figure>
+            <img class = "frame" src = "{% url '_stream4' %}">
+            <figcaption>{{Cam}}</figcaption>
+        </figure>
+
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+        <form name = "Camera_details" action='input' method="post"> 
+            {%csrf_token%}
+            <label for="ip">IP Address : </label>
+            <input type="text" id="ip" name="ip" placeholder="192.192.192.192"><br>
+ 
+            <label for="username" >Username : </label>
+            <input type="text" id="username" name="username" placeholder="Enter Ip Camera Username" ><br>
+
+            <label for="password">Password :    </label>
+            <input type="text" id="password" name="password" placeholder="Enter Ip Camera Password"><br>
+
+            <label for="port">Port Number : </label>
+            <input type="number" id="port" name="port" placeholder="8080"><br>
+
+            <input type="radio" id="html_radio" value = "http_radio" name="protocol" style = "margin: 20px;" checked>
+            <label for="html_radio" style="margin:20px; width: auto;">Http</label>
+
+            <input type="radio" id="rtsp_radio" value="rtsp_radio" name="protocol" style="margin: 20px;">
+            <label for="rtsp_radio" style="margin:20px; width: auto;">Rtsp</label><br>
+            
+            <label for= "link_text">Link: </label>
+                <input type="text" id = "link_text" name = "link" placeholder="Put Link Here if any">
+            <br>
+
+            <label for= "frames">Select Camera: </label>
+            <select id="frames" name="cams">
+                <option value="Cam1">Cam1</option>
+                <option value="Cam2">Cam2</option>
+                <option value="Cam3">Cam3</option>
+                <option value="Cam4">Cam4</option>
+            </select><br><br>
+            <input type="submit" id="submit" title="Submit"> 
+        </form>
+
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    </div>
+    
+      
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "400px";
+        }
+        
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+</body>
+</html>
